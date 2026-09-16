@@ -18,6 +18,13 @@
 
   --radius-card: 14px;
 
+  /*
+   * Motion tokens. The built-in CSS easings are too weak to read as deliberate,
+   * so these are the standard strong curves rather than hand-rolled ones.
+   */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -88,14 +95,54 @@ section[id] {
   }
 }
 
+/*
+ * Buttons and links: name the properties, never `transition: all`. Press
+ * feedback is deliberately short, at the fast end of the feedback range.
+ */
+a,
+button {
+  transition:
+    background-color 150ms var(--ease-out),
+    border-color 150ms var(--ease-out),
+    color 150ms var(--ease-out),
+    opacity 150ms var(--ease-out),
+    transform 120ms var(--ease-out);
+}
+
+/* Booking confirmation: feedback, so it enters rather than appears. */
+@keyframes confirm-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.confirm {
+  animation: confirm-in 240ms var(--ease-out) both;
+}
+
+/*
+ * Reduced motion means fewer and gentler, not none: opacity and colour still
+ * carry meaning, so only the movement is dropped.
+ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+  .confirm {
+    animation: none;
+  }
+  .settle {
+    animation: none;
+  }
   *,
   *::before,
   *::after {
+    transition-property: opacity, background-color, border-color, color;
     animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
   }
 }

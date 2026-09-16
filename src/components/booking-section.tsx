@@ -37,7 +37,7 @@ export function BookingSection({
               <li key={label} className="flex items-center gap-3 text-muted">
                 <Icon size={20} weight="duotone" className="text-accent" />
                 {href ? (
-                  <a href={href} className="transition-colors hover:text-text">
+                  <a href={href} className="hover:text-text">
                     {label}
                   </a>
                 ) : (

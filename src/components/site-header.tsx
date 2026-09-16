@@ -28,7 +28,7 @@ export function SiteHeader({ lang, t }: Props) {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-colors ${
+      className={`sticky top-0 z-50 border-b ${
         scrolled
           ? "border-line bg-ink/85 backdrop-blur-md"
           : "border-transparent bg-transparent"
@@ -47,21 +47,21 @@ export function SiteHeader({ lang, t }: Props) {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-muted transition-colors hover:text-text"
+              className="text-sm text-muted hover:text-text"
             >
               {link.label}
             </a>
           ))}
           <Link
             href={`/${otherLang}`}
-            className="text-sm text-muted transition-colors hover:text-text"
+            className="text-sm text-muted hover:text-text"
             aria-label={otherLang === "fr" ? "Voir en français" : "View in English"}
           >
             {otherLang.toUpperCase()}
           </Link>
           <a
             href="#book"
-            className="rounded-card bg-accent px-4 py-2 text-sm font-semibold text-on-accent transition-colors hover:bg-accent-strong"
+            className="rounded-card bg-accent px-4 py-2 text-sm font-semibold text-on-accent hover:bg-accent-strong"
           >
             {t.book}
           </a>

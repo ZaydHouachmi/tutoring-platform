@@ -56,7 +56,7 @@ export function BookingForm({ t, lang }: { t: Content["booking"]; lang: Lang }) 
 
   if (status === "sent") {
     return (
-      <div className="rounded-card border border-accent/50 bg-surface p-8 text-center">
+      <div className="confirm rounded-card border border-accent/50 bg-surface p-8 text-center">
         <CheckCircle size={40} weight="duotone" className="mx-auto text-accent" />
         <p className="mt-4 text-lg font-medium text-text">{t.success}</p>
       </div>
@@ -140,7 +140,7 @@ export function BookingForm({ t, lang }: { t: Content["booking"]; lang: Lang }) 
         <button
           type="submit"
           disabled={status === "sending"}
-          className="w-full rounded-card bg-accent px-6 py-3.5 font-semibold text-on-accent transition-colors hover:bg-accent-strong disabled:opacity-60 sm:w-auto"
+          className="w-full rounded-card bg-accent px-6 py-3.5 font-semibold text-on-accent hover:bg-accent-strong disabled:opacity-60 sm:w-auto"
         >
           {status === "sending" ? t.sending : t.submit}
         </button>

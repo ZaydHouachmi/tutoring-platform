@@ -45,13 +45,13 @@ export function Hero({ t }: { t: Content["hero"] }) {
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#book"
-              className="rounded-card bg-accent px-7 py-4 font-semibold text-on-accent transition-colors hover:bg-accent-strong active:translate-y-px"
+              className="rounded-card bg-accent px-7 py-4 font-semibold text-on-accent hover:bg-accent-strong active:translate-y-px"
             >
               {t.ctaPrimary}
             </a>
             <a
               href="#pricing"
-              className="rounded-card border border-line px-7 py-4 font-medium text-text transition-colors hover:border-muted"
+              className="rounded-card border border-line px-7 py-4 font-medium text-text hover:border-muted"
             >
               {t.ctaSecondary}
             </a>
@@ -208,7 +208,7 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
             <Features items={t.trial.features} />
             <a
               href="#book"
-              className="mt-7 block rounded-card bg-accent px-5 py-3 text-center font-semibold text-on-accent transition-colors hover:bg-accent-strong"
+              className="mt-7 block rounded-card bg-accent px-5 py-3 text-center font-semibold text-on-accent hover:bg-accent-strong"
             >
               {t.cta}
             </a>
@@ -221,7 +221,7 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
             <Features items={t.single.features} />
             <a
               href="#book"
-              className="mt-7 block rounded-card border border-line px-5 py-3 text-center font-medium text-text transition-colors hover:border-muted"
+              className="mt-7 block rounded-card border border-line px-5 py-3 text-center font-medium text-text hover:border-muted"
             >
               {t.cta}
             </a>
@@ -258,7 +258,7 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
                 <Features items={copy.features} />
                 <a
                   href="#book"
-                  className={`mt-7 block rounded-card px-5 py-3 text-center font-semibold transition-colors ${
+                  className={`mt-7 block rounded-card px-5 py-3 text-center font-semibold ${
                     pack.featured
                       ? "bg-accent text-on-accent hover:bg-accent-strong"
                       : "border border-line font-medium text-text hover:border-muted"
@@ -322,7 +322,7 @@ export function Faq({ t }: { t: Content["faq"] }) {
                 {item.q}
                 <span
                   aria-hidden
-                  className="text-xl leading-none text-accent transition-transform group-open:rotate-45"
+                  className="text-xl leading-none text-accent [transition:transform_200ms_var(--ease-out)] group-open:rotate-45"
                 >
                   +
                 </span>
