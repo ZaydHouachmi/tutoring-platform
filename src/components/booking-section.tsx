@@ -21,7 +21,7 @@ export function BookingSection({
   ];
 
   return (
-    <section id="book" className="border-t border-line bg-surface/40 py-24">
+    <section id="book" className="border-t border-line bg-surface-2 py-24">
       <div className="mx-auto grid w-full max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.15fr]">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">

@@ -24,11 +24,7 @@ export function Hero({ t }: { t: Content["hero"] }) {
       {/* Ruled paper texture plus one soft green wash. No neon, no mesh gradient. */}
       <div
         aria-hidden
-        className="paper-grid pointer-events-none absolute inset-0 opacity-70"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-48 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-accent/10 blur-[130px]"
+        className="paper-grid pointer-events-none absolute inset-0 opacity-90"
       />
       <div
         className={`${SHELL} relative grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]`}
@@ -66,7 +62,7 @@ export function Hero({ t }: { t: Content["hero"] }) {
             priority
             placeholder="blur"
             sizes="(max-width: 1024px) 90vw, 440px"
-            className="w-full rotate-[1.5deg] rounded-card shadow-[0_28px_70px_-30px_rgba(0,0,0,0.85)]"
+            className="w-full rotate-[1.5deg] rounded-card shadow-[0_22px_50px_-28px_rgba(20,24,26,0.35)]"
           />
         </div>
       </div>
@@ -76,7 +72,7 @@ export function Hero({ t }: { t: Content["hero"] }) {
 
 export function Credentials({ t }: { t: Content["credentials"] }) {
   return (
-    <section className="border-y border-line bg-surface/40 py-8">
+    <section className="border-y border-line bg-surface-2 py-8">
       <div className={SHELL}>
         <p className="text-xs uppercase tracking-[0.18em] text-muted">
           {t.label}
@@ -125,7 +121,7 @@ export function Approach({ t }: { t: Content["approach"] }) {
   return (
     <section
       id="approach"
-      className="relative overflow-hidden border-y border-line bg-surface/40 py-24"
+      className="relative overflow-hidden border-y border-line bg-surface-2 py-24"
     >
       <div
         aria-hidden
@@ -279,7 +275,7 @@ const LOGISTICS_ICONS = [CalendarDots, MapPin, GraduationCap, ChatCircleDots];
 
 export function Logistics({ t }: { t: Content["logistics"] }) {
   return (
-    <section className="border-y border-line bg-surface/40 py-20">
+    <section className="border-y border-line bg-surface-2 py-20">
       <div className={SHELL}>
         <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
           {t.heading}

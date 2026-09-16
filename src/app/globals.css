@@ -6,15 +6,15 @@
  * One theme for the whole page. One accent. One radius scale.
  */
 @theme {
-  --color-ink: #080d16;
-  --color-surface: #101827;
-  --color-surface-2: #16202f;
-  --color-line: #212c3d;
-  --color-text: #e9eef4;
-  --color-muted: #94a3b3;
-  --color-accent: #35c07a;
-  --color-accent-strong: #2aa568;
-  --color-on-accent: #06180e;
+  --color-ink: #fbfbf9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f4f5f2;
+  --color-line: #e3e5e0;
+  --color-text: #14181a;
+  --color-muted: #5a6560;
+  --color-accent: #0e7a4a;
+  --color-accent-strong: #0a6340;
+  --color-on-accent: #ffffff;
 
   --radius-card: 14px;
 

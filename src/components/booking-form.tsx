@@ -13,7 +13,7 @@ import {
 type Status = "idle" | "sending" | "sent" | "error";
 
 const fieldStyles =
-  "w-full rounded-card border border-line bg-ink px-4 py-3 text-text placeholder:text-muted/70 focus:border-accent focus:outline-none";
+  "w-full rounded-card border border-line bg-surface px-4 py-3 text-text placeholder:text-muted/70 focus:border-accent focus:outline-none";
 
 function Field({
   label,
@@ -130,7 +130,7 @@ export function BookingForm({ t, lang }: { t: Content["booking"]; lang: Lang }) 
       </div>
 
       {status === "error" ? (
-        <p className="flex items-center gap-2 text-sm text-red-300 sm:col-span-2">
+        <p className="flex items-center gap-2 text-sm text-red-700 sm:col-span-2">
           <WarningCircle size={18} weight="duotone" />
           {t.error} {CONTACT.email}
         </p>
