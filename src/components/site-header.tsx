@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { List, X } from "@phosphor-icons/react";
 import type { Content, Lang } from "@/lib/content";
@@ -11,7 +10,6 @@ type Props = { lang: Lang; t: Content["nav"] };
 export function SiteHeader({ lang, t }: Props) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -19,9 +17,6 @@ export function SiteHeader({ lang, t }: Props) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Close the mobile sheet whenever the route changes.
-  useEffect(() => setOpen(false), [pathname]);
 
   const links = [
     { href: "#sessions", label: t.services },
@@ -89,7 +84,10 @@ export function SiteHeader({ lang, t }: Props) {
         hidden={!open}
         className="border-t border-line bg-ink md:hidden"
       >
-        <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-4">
+        <nav
+          className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-4"
+          onClick={() => setOpen(false)}
+        >
           {links.map((link) => (
             <a
               key={link.href}
