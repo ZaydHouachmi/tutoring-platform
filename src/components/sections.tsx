@@ -6,8 +6,7 @@ import {
   MapPin,
 } from "@phosphor-icons/react/dist/ssr";
 import { RATES, type Content } from "@/lib/content";
-import methodImage from "../../public/brand/word-problems-method.png";
-import cardImage from "../../public/brand/word-problems-card.png";
+import notebookImage from "../../public/brand/notebook-problem.png";
 
 const SHELL = "mx-auto w-full max-w-6xl px-5 sm:px-8";
 
@@ -21,48 +20,53 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 export function Hero({ t }: { t: Content["hero"] }) {
   return (
-    <section className="relative overflow-hidden pt-16 pb-20 sm:pt-24">
-      {/* Soft green wash behind the headline, tinted to the page, no neon glow. */}
+    <section className="relative overflow-hidden pt-14 pb-24 sm:pt-20">
+      {/* Ruled paper texture plus one soft green wash. No neon, no mesh gradient. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-accent/10 blur-[120px]"
+        className="paper-grid pointer-events-none absolute inset-0 opacity-70"
       />
       <div
-        className={`${SHELL} relative grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]`}
+        aria-hidden
+        className="pointer-events-none absolute -top-48 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-accent/10 blur-[130px]"
+      />
+      <div
+        className={`${SHELL} relative grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]`}
       >
         <div>
           <Eyebrow>{t.eyebrow}</Eyebrow>
-          <h1 className="mt-5 text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
             {t.headline}{" "}
             <span className="text-accent">{t.headlineAccent}</span>
           </h1>
-          <p className="mt-6 max-w-[48ch] text-lg leading-relaxed text-muted">
+          <p className="mt-7 max-w-[46ch] text-lg leading-relaxed text-muted">
             {t.sub}
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-3">
+          <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
               href="#book"
-              className="rounded-card bg-accent px-6 py-3.5 font-semibold text-on-accent transition-transform hover:bg-accent-strong active:translate-y-px"
+              className="rounded-card bg-accent px-7 py-4 font-semibold text-on-accent transition-colors hover:bg-accent-strong active:translate-y-px"
             >
               {t.ctaPrimary}
             </a>
             <a
               href="#pricing"
-              className="rounded-card border border-line px-6 py-3.5 font-medium text-text transition-colors hover:border-muted"
+              className="rounded-card border border-line px-7 py-4 font-medium text-text transition-colors hover:border-muted"
             >
               {t.ctaSecondary}
             </a>
           </div>
         </div>
 
-        <div className="relative">
+        {/* Tilted slightly so it reads as a page on a desk rather than a screenshot. */}
+        <div className="relative mx-auto w-full max-w-[380px] lg:max-w-[440px]">
           <Image
-            src={methodImage}
+            src={notebookImage}
             alt={t.imageAlt}
             priority
             placeholder="blur"
-            sizes="(max-width: 1024px) 100vw, 520px"
-            className="w-full rounded-card border border-line"
+            sizes="(max-width: 1024px) 90vw, 440px"
+            className="w-full rotate-[1.5deg] rounded-card shadow-[0_28px_70px_-30px_rgba(0,0,0,0.85)]"
           />
         </div>
       </div>
@@ -94,7 +98,7 @@ export function Services({ t }: { t: Content["services"] }) {
   return (
     <section id="sessions" className="py-24">
       <div className={SHELL}>
-        <h2 className="max-w-[18ch] text-3xl font-semibold tracking-tight sm:text-4xl">
+        <h2 className="max-w-[16ch] text-3xl font-semibold tracking-[-0.02em] sm:text-5xl">
           {t.heading}
         </h2>
         <p className="mt-4 max-w-[58ch] text-lg leading-relaxed text-muted">
@@ -105,7 +109,7 @@ export function Services({ t }: { t: Content["services"] }) {
           {t.items.map((item) => (
             <article
               key={item.title}
-              className="rounded-card border border-line bg-surface p-7"
+              className="settle rounded-card border border-line bg-surface p-7"
             >
               <h3 className="text-xl font-semibold text-text">{item.title}</h3>
               <p className="mt-3 leading-relaxed text-muted">{item.body}</p>
@@ -119,41 +123,40 @@ export function Services({ t }: { t: Content["services"] }) {
 
 export function Approach({ t }: { t: Content["approach"] }) {
   return (
-    <section id="approach" className="border-y border-line bg-surface/40 py-24">
-      <div className={`${SHELL} grid items-center gap-14 lg:grid-cols-2`}>
-        <div className="order-2 lg:order-1">
-          <Image
-            src={cardImage}
-            alt={t.imageAlt}
-            placeholder="blur"
-            sizes="(max-width: 1024px) 100vw, 520px"
-            className="w-full rounded-card border border-line"
-          />
-        </div>
-
-        <div className="order-1 lg:order-2">
+    <section
+      id="approach"
+      className="relative overflow-hidden border-y border-line bg-surface/40 py-24"
+    >
+      <div
+        aria-hidden
+        className="paper-grid pointer-events-none absolute inset-0 opacity-50"
+      />
+      <div className={`${SHELL} relative grid gap-14 lg:grid-cols-[0.85fr_1.15fr]`}>
+        <div className="lg:sticky lg:top-28 lg:self-start">
           <Eyebrow>{t.eyebrow}</Eyebrow>
-          <h2 className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h2 className="mt-5 text-3xl font-semibold tracking-[-0.02em] sm:text-5xl">
             {t.heading}
           </h2>
-          <p className="mt-4 max-w-[52ch] leading-relaxed text-muted">{t.sub}</p>
-
-          <ol className="mt-9 space-y-5">
-            {t.steps.map((step, i) => (
-              <li key={step.title} className="flex gap-4">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-accent/40 text-sm font-semibold text-accent">
-                  {i + 1}
-                </span>
-                <div>
-                  <p className="font-medium text-text">{step.title}</p>
-                  <p className="mt-0.5 text-sm leading-relaxed text-muted">
-                    {step.body}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <p className="mt-4 max-w-[46ch] leading-relaxed text-muted">{t.sub}</p>
         </div>
+
+        {/* The steps are the visual here: numbers set large, one rule between each. */}
+        <ol className="divide-y divide-line border-y border-line">
+          {t.steps.map((step, i) => (
+            <li
+              key={step.title}
+              className="settle grid grid-cols-[3rem_1fr] items-baseline gap-x-5 py-6"
+            >
+              <span className="font-mono text-3xl font-medium text-accent/70">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <p className="text-lg font-medium text-text">{step.title}</p>
+                <p className="mt-1 leading-relaxed text-muted">{step.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
@@ -187,18 +190,18 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
   return (
     <section id="pricing" className="py-24">
       <div className={SHELL}>
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t.heading}
-        </h2>
-        <p className="mt-4 max-w-[52ch] text-lg leading-relaxed text-muted">
-          {t.sub}
-        </p>
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight sm:text-5xl">
+            {t.heading}
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-muted">{t.sub}</p>
+        </div>
 
         <p className="mt-14 text-sm font-medium uppercase tracking-[0.14em] text-muted">
           {t.oneTime}
         </p>
         <div className="mt-5 grid gap-5 md:grid-cols-2">
-          <article className="rounded-card border border-accent/50 bg-surface p-7">
+          <article className="settle rounded-card border border-accent/50 bg-surface p-7">
             <h3 className="text-lg font-semibold text-text">{t.trial.name}</h3>
             <p className="mt-1 text-sm text-muted">{t.trial.blurb}</p>
             <Price amount={String(RATES.trial)} />
@@ -211,7 +214,7 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
             </a>
           </article>
 
-          <article className="rounded-card border border-line bg-surface p-7">
+          <article className="settle rounded-card border border-line bg-surface p-7">
             <h3 className="text-lg font-semibold text-text">{t.single.name}</h3>
             <p className="mt-1 text-sm text-muted">{t.single.blurb}</p>
             <Price amount={String(RATES.hourly)} suffix={t.perHourShort} />
@@ -235,7 +238,7 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
             return (
               <article
                 key={pack.id}
-                className={`relative rounded-card border bg-surface p-7 ${
+                className={`settle relative rounded-card border bg-surface p-7 ${
                   pack.featured ? "border-accent/50" : "border-line"
                 }`}
               >
@@ -287,7 +290,7 @@ export function Logistics({ t }: { t: Content["logistics"] }) {
             return (
               <div
                 key={card.title}
-                className="grid gap-2 py-5 sm:grid-cols-[auto_10rem_1fr] sm:items-baseline sm:gap-6"
+                className="settle grid gap-2 py-5 sm:grid-cols-[auto_10rem_1fr] sm:items-baseline sm:gap-6"
               >
                 <Icon
                   size={20}
@@ -314,7 +317,7 @@ export function Faq({ t }: { t: Content["faq"] }) {
         </h2>
         <div className="mt-10 divide-y divide-line border-y border-line">
           {t.items.map((item) => (
-            <details key={item.q} className="group py-5">
+            <details key={item.q} className="settle group py-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-medium text-text">
                 {item.q}
                 <span
