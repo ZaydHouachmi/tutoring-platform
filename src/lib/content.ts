@@ -39,6 +39,12 @@ export type Content = {
     sub: string;
     items: { title: string; body: string }[];
   };
+  about: {
+    eyebrow: string;
+    heading: string;
+    paragraphs: string[];
+    imageAlt: string;
+  };
   approach: {
     eyebrow: string;
     heading: string;
@@ -136,6 +142,16 @@ export const content: Record<Lang, Content> = {
           body: "After every session you get a short note on what we covered and what is improving.",
         },
       ],
+    },
+    about: {
+      eyebrow: "Meet your tutor",
+      heading: "Hi, I'm Zayd.",
+      paragraphs: [
+        "I am a Mechanical Engineering student at uOttawa, so the algebra and trigonometry your child is fighting with is math I still use most weeks. I can show them where it leads, not just how to pass Friday's test.",
+        "I was born in Morocco and grew up in Ottawa. I tutor in English, French or Arabic, whichever language your child thinks in, because translating a question is not the same as understanding it.",
+        "I started out by founding a tutoring program at my high school, and I tutor with Better Learning. Outside sessions, I run road races around the city.",
+      ],
+      imageAlt: "Zayd Houachmi, math tutor in Ottawa",
     },
     approach: {
       eyebrow: "The method",
@@ -343,6 +359,16 @@ export const content: Record<Lang, Content> = {
           body: "Après chaque séance, vous recevez une note courte sur ce qu'on a vu et ce qui s'améliore.",
         },
       ],
+    },
+    about: {
+      eyebrow: "Votre tuteur",
+      heading: "Bonjour, je suis Zayd.",
+      paragraphs: [
+        "Je suis étudiant en génie mécanique à uOttawa. L'algèbre et la trigonométrie qui bloquent votre enfant, je m'en sers encore presque chaque semaine. Je peux lui montrer à quoi ça mène, pas seulement comment passer le test de vendredi.",
+        "Je suis né au Maroc et j'ai grandi à Ottawa. J'enseigne en anglais, en français ou en arabe, dans la langue où votre enfant pense, parce que traduire une question n'est pas la comprendre.",
+        "J'ai commencé en fondant un programme de tutorat à mon école secondaire, et je tutore avec Better Learning. En dehors des séances, je fais des courses sur route dans la ville.",
+      ],
+      imageAlt: "Zayd Houachmi, tuteur de mathématiques à Ottawa",
     },
     approach: {
       eyebrow: "La méthode",

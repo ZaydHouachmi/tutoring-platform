@@ -7,6 +7,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { RATES, type Content } from "@/lib/content";
 import notebookImage from "../../public/brand/notebook-problem.png";
+import portrait from "../../public/brand/zayd.jpg";
 
 const SHELL = "mx-auto w-full max-w-6xl px-5 sm:px-8";
 
@@ -111,6 +112,36 @@ export function Services({ t }: { t: Content["services"] }) {
               <p className="mt-3 leading-relaxed text-muted">{item.body}</p>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function About({ t }: { t: Content["about"] }) {
+  return (
+    <section id="about" className="py-24">
+      <div className={`${SHELL} grid items-center gap-12 md:grid-cols-[minmax(0,320px)_1fr] md:gap-16`}>
+        <div className="settle">
+          <Image
+            src={portrait}
+            alt={t.imageAlt}
+            placeholder="blur"
+            sizes="(max-width: 768px) 60vw, 320px"
+            className="w-full max-w-[320px] rounded-card"
+          />
+        </div>
+
+        <div>
+          <Eyebrow>{t.eyebrow}</Eyebrow>
+          <h2 className="mt-5 text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
+            {t.heading}
+          </h2>
+          <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+            {t.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+            ))}
+          </div>
         </div>
       </div>
     </section>

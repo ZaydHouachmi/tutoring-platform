@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { BookingSection } from "@/components/booking-section";
 import {
+  About,
   Approach,
   Credentials,
   Faq,
@@ -59,6 +60,7 @@ export default async function LandingPage({
         <Hero t={t.hero} />
         <Credentials t={t.credentials} />
         <Services t={t.services} />
+        <About t={t.about} />
         <Approach t={t.approach} />
         <Pricing t={t.pricing} />
         <Logistics t={t.logistics} />
