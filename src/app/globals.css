@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Brand: dark ink + a single green accent, carried over from the existing
+ * Instagram creatives so the site and the social feed read as one brand.
+ * One theme for the whole page. One accent. One radius scale.
+ */
+@theme {
+  --color-ink: #080d16;
+  --color-surface: #101827;
+  --color-surface-2: #16202f;
+  --color-line: #212c3d;
+  --color-text: #e9eef4;
+  --color-muted: #94a3b3;
+  --color-accent: #35c07a;
+  --color-accent-strong: #2aa568;
+  --color-on-accent: #06180e;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --radius-card: 14px;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ink);
+  color: var(--color-text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Scroll-margin so anchored sections clear the sticky header. */
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
