@@ -32,6 +32,13 @@ export type Content = {
     ctaPrimary: string;
     ctaSecondary: string;
     imageAlt: string;
+    card: {
+      flip: string;
+      back: string;
+      name: string;
+      role: string;
+      facts: { label: string; value: string }[];
+    };
   };
   credentials: { label: string; items: { title: string; detail: string }[] };
   services: {
@@ -122,8 +129,19 @@ export const content: Record<Lang, Content> = {
       sub: "One on one sessions with an engineering student who uses this math daily. Online or in person.",
       ctaPrimary: "Book a session",
       ctaSecondary: "See pricing",
-      imageAlt:
-        "Worked example showing the five step method for solving a word problem",
+      imageAlt: "Zayd Houachmi, math tutor in Ottawa",
+      card: {
+        flip: "The quick facts",
+        back: "Back to the photo",
+        name: "Zayd Houachmi",
+        role: "Mechanical Engineering, uOttawa",
+        facts: [
+          { label: "Languages", value: "English, French, Arabic" },
+          { label: "Grades", value: "Any, mostly 7 to 12" },
+          { label: "When", value: "Friday evenings, weekends" },
+          { label: "Where", value: "Online or in person in Ottawa" },
+        ],
+      },
     },
     credentials: {
       label: "Who you are working with",
@@ -358,8 +376,19 @@ export const content: Record<Lang, Content> = {
       sub: "Séances individuelles avec un étudiant en génie qui utilise ces maths tous les jours. En ligne ou en personne.",
       ctaPrimary: "Réserver une séance",
       ctaSecondary: "Voir les tarifs",
-      imageAlt:
-        "Exemple résolu montrant la méthode en cinq étapes pour un problème écrit",
+      imageAlt: "Zayd Houachmi, tuteur de mathématiques à Ottawa",
+      card: {
+        flip: "Les infos rapides",
+        back: "Revenir à la photo",
+        name: "Zayd Houachmi",
+        role: "Génie mécanique, uOttawa",
+        facts: [
+          { label: "Langues", value: "Anglais, français, arabe" },
+          { label: "Niveaux", value: "Tous, surtout la 7e à la 12e" },
+          { label: "Quand", value: "Vendredis soir, fins de semaine" },
+          { label: "Où", value: "En ligne ou en personne à Ottawa" },
+        ],
+      },
     },
     credentials: {
       label: "Avec qui vous travaillez",

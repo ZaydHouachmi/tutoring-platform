@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   CalendarDots,
   ChatCircleDots,
@@ -7,8 +6,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { RATES, type Content } from "@/lib/content";
 import { MethodWalkthrough } from "@/components/method-walkthrough";
-import notebookImage from "../../public/brand/notebook-problem.png";
-import portrait from "../../public/brand/zayd.jpg";
+import { HeroPortrait } from "@/components/hero-portrait";
 
 const SHELL = "mx-auto w-full max-w-6xl px-5 sm:px-8";
 
@@ -56,17 +54,7 @@ export function Hero({ t }: { t: Content["hero"] }) {
           </div>
         </div>
 
-        {/* Tilted slightly so it reads as a page on a desk rather than a screenshot. */}
-        <div className="relative mx-auto w-full max-w-[380px] lg:max-w-[440px]">
-          <Image
-            src={notebookImage}
-            alt={t.imageAlt}
-            priority
-            placeholder="blur"
-            sizes="(max-width: 1024px) 90vw, 440px"
-            className="w-full rotate-[1.5deg] rounded-card shadow-[0_22px_50px_-28px_rgba(20,24,26,0.35)]"
-          />
-        </div>
+        <HeroPortrait t={t} />
       </div>
     </section>
   );
@@ -122,17 +110,7 @@ export function Services({ t }: { t: Content["services"] }) {
 export function About({ t }: { t: Content["about"] }) {
   return (
     <section id="about" className="py-24">
-      <div className={`${SHELL} grid items-center gap-12 md:grid-cols-[minmax(0,320px)_1fr] md:gap-16`}>
-        <div className="settle">
-          <Image
-            src={portrait}
-            alt={t.imageAlt}
-            placeholder="blur"
-            sizes="(max-width: 768px) 60vw, 320px"
-            className="w-full max-w-[320px] rounded-card"
-          />
-        </div>
-
+      <div className={`${SHELL} max-w-3xl`}>
         <div>
           <Eyebrow>{t.eyebrow}</Eyebrow>
           <h2 className="mt-5 text-3xl font-semibold tracking-[-0.02em] sm:text-4xl">
