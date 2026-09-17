@@ -152,6 +152,40 @@ button {
   transition: opacity 300ms var(--ease-out) 700ms;
 }
 
+/*
+ * The journey. Explanatory motion, so it runs longer than UI motion would:
+ * the train covers the unknown stretch while the question turns into the
+ * answer. ease-in-out because it starts from rest and comes to rest.
+ */
+.train-sketch .train-body {
+  transform: translateX(0);
+  transition: transform 1500ms var(--ease-in-out);
+}
+
+.train-sketch.is-traveling .train-body {
+  transform: translateX(162px);
+}
+
+/*
+ * Specificity note: `.train-sketch.is-drawing text` is more specific than a
+ * plain `.train-answer` rule, so the answer needs the same weight to stay
+ * hidden until the train has actually travelled.
+ */
+.train-sketch .train-answer,
+.train-sketch.is-drawing .train-answer {
+  opacity: 0;
+}
+
+.train-sketch.is-traveling .train-question {
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out);
+}
+
+.train-sketch.is-traveling .train-answer {
+  opacity: 1;
+  transition: opacity 400ms var(--ease-out) 1100ms;
+}
+
 /* Booking confirmation: feedback, so it enters rather than appears. */
 @keyframes confirm-in {
   from {
@@ -190,6 +224,20 @@ button {
   }
   .train-sketch text {
     opacity: 1;
+  }
+  /* No journey under reduced motion: the answer is simply there. */
+  .train-sketch .train-body,
+  .train-sketch.is-traveling .train-body {
+    transform: none;
+    transition: none;
+  }
+  .train-sketch.is-traveling .train-question {
+    opacity: 0;
+  }
+  .train-sketch .train-answer,
+  .train-sketch.is-traveling .train-answer {
+    opacity: 1;
+    transition: none;
   }
   .settle {
     animation: none;

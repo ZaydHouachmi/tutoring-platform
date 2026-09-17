@@ -111,7 +111,7 @@ export function MethodWalkthrough({
 
         <Reveal on={step >= 3}>
           <div className="mt-6 flex justify-center rounded-card bg-surface-2 px-4 py-5">
-            <TrainSketch drawing={step >= 3} />
+            <TrainSketch drawing={step >= 3} traveling={step >= 4} answer={t.answer} />
           </div>
         </Reveal>
 
