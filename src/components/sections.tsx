@@ -6,6 +6,7 @@ import {
   MapPin,
 } from "@phosphor-icons/react/dist/ssr";
 import { RATES, type Content } from "@/lib/content";
+import { MethodWalkthrough } from "@/components/method-walkthrough";
 import notebookImage from "../../public/brand/notebook-problem.png";
 import portrait from "../../public/brand/zayd.jpg";
 
@@ -148,7 +149,13 @@ export function About({ t }: { t: Content["about"] }) {
   );
 }
 
-export function Approach({ t }: { t: Content["approach"] }) {
+export function Approach({
+  t,
+  demo,
+}: {
+  t: Content["approach"];
+  demo: Content["demo"];
+}) {
   return (
     <section
       id="approach"
@@ -158,32 +165,18 @@ export function Approach({ t }: { t: Content["approach"] }) {
         aria-hidden
         className="paper-grid pointer-events-none absolute inset-0 opacity-50"
       />
-      <div className={`${SHELL} relative grid gap-14 lg:grid-cols-[0.85fr_1.15fr]`}>
-        <div className="lg:sticky lg:top-28 lg:self-start">
+      <div className={`${SHELL} relative`}>
+        <div className="max-w-2xl">
           <Eyebrow>{t.eyebrow}</Eyebrow>
           <h2 className="mt-5 text-3xl font-semibold tracking-[-0.02em] sm:text-5xl">
             {t.heading}
           </h2>
-          <p className="mt-4 max-w-[46ch] leading-relaxed text-muted">{t.sub}</p>
+          <p className="mt-4 leading-relaxed text-muted">{t.sub}</p>
         </div>
 
-        {/* The steps are the visual here: numbers set large, one rule between each. */}
-        <ol className="divide-y divide-line border-y border-line">
-          {t.steps.map((step, i) => (
-            <li
-              key={step.title}
-              className="settle grid grid-cols-[3rem_1fr] items-baseline gap-x-5 py-6"
-            >
-              <span className="font-mono text-3xl font-medium text-accent/70">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <p className="text-lg font-medium text-text">{step.title}</p>
-                <p className="mt-1 leading-relaxed text-muted">{step.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div className="mt-12">
+          <MethodWalkthrough steps={t.steps} t={demo} />
+        </div>
       </div>
     </section>
   );

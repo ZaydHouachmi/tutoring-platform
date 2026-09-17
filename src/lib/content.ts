@@ -45,6 +45,19 @@ export type Content = {
     paragraphs: string[];
     imageAlt: string;
   };
+  demo: {
+    label: string;
+    problem: { before: string; distance: string; middle: string; time: string; question: string };
+    known: string;
+    need: string;
+    knownItems: string[];
+    needItem: string;
+    working: string;
+    answer: string;
+    check: string;
+    replay: string;
+    stepOf: string;
+  };
   approach: {
     eyebrow: string;
     heading: string;
@@ -152,6 +165,25 @@ export const content: Record<Lang, Content> = {
         "I started out by founding a tutoring program at my high school, and I tutor with Better Learning. Outside sessions, I run road races around the city.",
       ],
       imageAlt: "Zayd Houachmi, math tutor in Ottawa",
+    },
+    demo: {
+      label: "Try it on a real question",
+      problem: {
+        before: "A train travels ",
+        distance: "240 km",
+        middle: " in ",
+        time: "3 hours",
+        question: "If it keeps the same speed, how far does it travel in 5 hours?",
+      },
+      known: "What I know",
+      need: "What I need",
+      knownItems: ["240 km covered", "in 3 hours", "speed stays the same"],
+      needItem: "distance after 5 hours",
+      working: "240 ÷ 3 = 80 km/h, then 80 × 5",
+      answer: "400 km",
+      check: "A train doing 80 km/h for 5 hours. That is a sensible number, so the answer holds.",
+      replay: "Start over",
+      stepOf: "Step",
     },
     approach: {
       eyebrow: "The method",
@@ -369,6 +401,25 @@ export const content: Record<Lang, Content> = {
         "J'ai commencé en fondant un programme de tutorat à mon école secondaire, et je tutore avec Better Learning. En dehors des séances, je fais des courses sur route dans la ville.",
       ],
       imageAlt: "Zayd Houachmi, tuteur de mathématiques à Ottawa",
+    },
+    demo: {
+      label: "Essayez sur une vraie question",
+      problem: {
+        before: "Un train parcourt ",
+        distance: "240 km",
+        middle: " en ",
+        time: "3 heures",
+        question: "S'il garde la même vitesse, quelle distance parcourt-il en 5 heures?",
+      },
+      known: "Ce que je sais",
+      need: "Ce que je cherche",
+      knownItems: ["240 km parcourus", "en 3 heures", "vitesse constante"],
+      needItem: "la distance après 5 heures",
+      working: "240 ÷ 3 = 80 km/h, puis 80 × 5",
+      answer: "400 km",
+      check: "Un train à 80 km/h pendant 5 heures. Le nombre est plausible, la réponse tient.",
+      replay: "Recommencer",
+      stepOf: "Étape",
     },
     approach: {
       eyebrow: "La méthode",

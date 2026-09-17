@@ -65,6 +65,16 @@ export function BookingForm({ t, lang }: { t: Content["booking"]; lang: Lang }) 
 
   return (
     <form onSubmit={onSubmit} className="grid gap-5 sm:grid-cols-2">
+      {/* Honeypot. Hidden from people and assistive tech; bots fill it in. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
       <div className="sm:col-span-2">
         <Field label={t.name}>
           <input name="name" required autoComplete="name" className={fieldStyles} />

@@ -61,7 +61,7 @@ export default async function LandingPage({
         <Credentials t={t.credentials} />
         <Services t={t.services} />
         <About t={t.about} />
-        <Approach t={t.approach} />
+        <Approach t={t.approach} demo={t.demo} />
         <Pricing t={t.pricing} />
         <Logistics t={t.logistics} />
         <Faq t={t.faq} />
