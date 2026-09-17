@@ -8,6 +8,7 @@ import { RATES, type Content } from "@/lib/content";
 import { MethodWalkthrough } from "@/components/method-walkthrough";
 import { HeroPortrait } from "@/components/hero-portrait";
 import { PenUnderline } from "@/components/pen-underline";
+import { PricePicker } from "@/components/price-picker";
 
 const SHELL = "mx-auto w-full max-w-6xl px-5 sm:px-8";
 
@@ -198,6 +199,8 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted">{t.sub}</p>
         </div>
+
+        <PricePicker t={t} />
 
         <p className="mt-14 text-sm font-medium uppercase tracking-[0.14em] text-muted">
           {t.oneTime}

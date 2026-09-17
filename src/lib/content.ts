@@ -85,6 +85,16 @@ export type Content = {
     save: string;
     popular: string;
     cta: string;
+    picker: {
+      question: string;
+      hours: string;
+      recommend: string;
+      youPay: string;
+      effective: string;
+      saves: string;
+      noSaving: string;
+      plusExtra: string;
+    };
   };
   logistics: {
     heading: string;
@@ -288,6 +298,16 @@ export const content: Record<Lang, Content> = {
       save: "Save",
       popular: "Most booked",
       cta: "Book this",
+      picker: {
+        question: "How many hours a month do you need?",
+        hours: "hours a month",
+        recommend: "Best fit",
+        youPay: "You pay",
+        effective: "Works out to",
+        saves: "Saves you",
+        noSaving: "No package needed at this many hours",
+        plusExtra: "plus extra hours at the single rate",
+      },
     },
     logistics: {
       heading: "How it works in practice",
@@ -536,6 +556,16 @@ export const content: Record<Lang, Content> = {
       save: "Économie de",
       popular: "Le plus réservé",
       cta: "Choisir",
+      picker: {
+        question: "Combien d'heures par mois vous faut-il?",
+        hours: "heures par mois",
+        recommend: "Le mieux adapté",
+        youPay: "Vous payez",
+        effective: "Revient à",
+        saves: "Économie de",
+        noSaving: "Aucun forfait nécessaire à ce nombre d'heures",
+        plusExtra: "plus des heures supplémentaires au tarif unitaire",
+      },
     },
     logistics: {
       heading: "Comment ça se passe",
