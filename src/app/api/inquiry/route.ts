@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { parseInquiry, pruneRateLimits, rateLimit } from "@/lib/inquiry";
 import { isConfigured, supabase } from "@/lib/supabase";
+import { notifyNewBooking } from "@/lib/notify";
 
 /**
  * Booking requests from the landing page.
@@ -81,6 +82,10 @@ export async function POST(request: Request) {
     console.error("[inquiry] insert failed", error.message);
     return NextResponse.json({ error: "Could not save" }, { status: 500 });
   }
+
+  // Saved first, told second. notifyNewBooking never throws, so a mail outage
+  // cannot turn a stored booking into an error for the family.
+  await notifyNewBooking(inquiry);
 
   return NextResponse.json({ ok: true, stored: true });
 }
