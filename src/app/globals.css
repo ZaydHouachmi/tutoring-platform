@@ -128,6 +128,30 @@ button {
   animation: draw-stroke 700ms var(--ease-out) 450ms forwards;
 }
 
+/*
+ * The sketch draws stroke by stroke when its step is reached. Each path
+ * carries its own length and delay, so one rule covers the whole drawing.
+ */
+.train-sketch path {
+  stroke-dasharray: var(--len, 200);
+  stroke-dashoffset: var(--len, 200);
+  transition: stroke-dashoffset 0ms;
+}
+
+.train-sketch text {
+  opacity: 0;
+}
+
+.train-sketch.is-drawing path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 520ms var(--ease-out) var(--delay, 0ms);
+}
+
+.train-sketch.is-drawing text {
+  opacity: 1;
+  transition: opacity 300ms var(--ease-out) 700ms;
+}
+
 /* Booking confirmation: feedback, so it enters rather than appears. */
 @keyframes confirm-in {
   from {
@@ -158,6 +182,14 @@ button {
   .pen-underline path {
     animation: none;
     stroke-dashoffset: 0;
+  }
+  .train-sketch path,
+  .train-sketch.is-drawing path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .train-sketch text {
+    opacity: 1;
   }
   .settle {
     animation: none;

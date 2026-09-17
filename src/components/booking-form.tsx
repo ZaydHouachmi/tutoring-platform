@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle, WarningCircle } from "@phosphor-icons/react";
+import type { Slot } from "@/lib/availability";
 import {
   CONTACT,
   GRADES,
@@ -33,7 +34,15 @@ function Field({
   );
 }
 
-export function BookingForm({ t, lang }: { t: Content["booking"]; lang: Lang }) {
+export function BookingForm({
+  t,
+  lang,
+  slot,
+}: {
+  t: Content["booking"];
+  lang: Lang;
+  slot?: Slot | null;
+}) {
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -45,7 +54,7 @@ export function BookingForm({ t, lang }: { t: Content["booking"]; lang: Lang }) 
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, lang }),
+        body: JSON.stringify({ ...data, lang, slot: slot?.id ?? "" }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus("sent");

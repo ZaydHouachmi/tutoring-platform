@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import type { Content } from "@/lib/content";
+import { TrainSketch } from "@/components/train-sketch";
 
 /**
  * Walks a real word problem through the five steps, one click at a time.
@@ -109,7 +110,13 @@ export function MethodWalkthrough({
         </Reveal>
 
         <Reveal on={step >= 3}>
-          <p className="mt-6 rounded-card bg-surface-2 px-4 py-3 font-mono text-sm text-text">
+          <div className="mt-6 flex justify-center rounded-card bg-surface-2 px-4 py-5">
+            <TrainSketch drawing={step >= 3} />
+          </div>
+        </Reveal>
+
+        <Reveal on={step >= 3}>
+          <p className="mt-4 rounded-card bg-surface-2 px-4 py-3 font-mono text-sm text-text">
             {t.working}
           </p>
         </Reveal>

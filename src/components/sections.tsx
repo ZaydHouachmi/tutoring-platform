@@ -1,9 +1,3 @@
-import {
-  CalendarDots,
-  ChatCircleDots,
-  GraduationCap,
-  MapPin,
-} from "@phosphor-icons/react/dist/ssr";
 import { RATES, type Content } from "@/lib/content";
 import { MethodWalkthrough } from "@/components/method-walkthrough";
 import { HeroPortrait } from "@/components/hero-portrait";
@@ -165,29 +159,7 @@ export function Approach({
   );
 }
 
-function Price({ amount, suffix }: { amount: string; suffix?: string }) {
-  return (
-    <p className="mt-4 flex items-baseline gap-1.5">
-      <span className="text-4xl font-semibold tracking-tight text-text">
-        ${amount}
-      </span>
-      {suffix ? <span className="text-sm text-muted">{suffix}</span> : null}
-    </p>
-  );
-}
 
-function Features({ items }: { items: string[] }) {
-  return (
-    <ul className="mt-6 space-y-2.5 text-sm text-muted">
-      {items.map((f) => (
-        <li key={f} className="flex gap-2.5">
-          <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
-          {f}
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export function Pricing({ t }: { t: Content["pricing"] }) {
   return (
@@ -202,112 +174,25 @@ export function Pricing({ t }: { t: Content["pricing"] }) {
 
         <PricePicker t={t} />
 
-        <p className="mt-14 text-sm font-medium uppercase tracking-[0.14em] text-muted">
-          {t.oneTime}
-        </p>
-        <div className="mt-5 grid gap-5 md:grid-cols-2">
-          <article className="settle rounded-card border border-accent/50 bg-surface p-7">
-            <h3 className="text-lg font-semibold text-text">{t.trial.name}</h3>
-            <p className="mt-1 text-sm text-muted">{t.trial.blurb}</p>
-            <Price amount={String(RATES.trial)} />
-            <Features items={t.trial.features} />
-            <a
-              href="#book"
-              className="mt-7 block rounded-card bg-accent px-5 py-3 text-center font-semibold text-on-accent hover:bg-accent-strong"
-            >
-              {t.cta}
-            </a>
-          </article>
-
-          <article className="settle rounded-card border border-line bg-surface p-7">
-            <h3 className="text-lg font-semibold text-text">{t.single.name}</h3>
-            <p className="mt-1 text-sm text-muted">{t.single.blurb}</p>
-            <Price amount={String(RATES.hourly)} suffix={t.perHourShort} />
-            <Features items={t.single.features} />
-            <a
-              href="#book"
-              className="mt-7 block rounded-card border border-line px-5 py-3 text-center font-medium text-text hover:border-muted"
-            >
-              {t.cta}
-            </a>
-          </article>
+        {/* The trial is the only offer worth its own block: it is what gets a
+            first session booked. */}
+        <div className="settle mt-6 flex flex-col items-start justify-between gap-5 rounded-card border border-accent/40 bg-surface p-6 sm:flex-row sm:items-center sm:p-7">
+          <div>
+            <p className="text-lg font-semibold text-text">
+              {t.trial.name}
+              <span className="ml-3 font-mono text-accent">${RATES.trial}</span>
+            </p>
+            <p className="mt-1 text-sm text-muted">
+              {t.trial.features.join(" · ")}
+            </p>
+          </div>
+          <a
+            href="#book"
+            className="shrink-0 rounded-card bg-accent px-6 py-3 font-semibold text-on-accent hover:bg-accent-strong active:scale-[0.97]"
+          >
+            {t.cta}
+          </a>
         </div>
-
-        <p className="mt-14 text-sm font-medium uppercase tracking-[0.14em] text-muted">
-          {t.monthly}
-        </p>
-        <div className="mt-5 grid gap-5 lg:grid-cols-3">
-          {RATES.packs.map((pack) => {
-            const copy = t.packs[pack.id];
-            const saved = RATES.hourly * pack.sessions - pack.price;
-            return (
-              <article
-                key={pack.id}
-                className={`settle relative rounded-card border bg-surface p-7 ${
-                  pack.featured ? "border-accent/50" : "border-line"
-                }`}
-              >
-                {pack.featured ? (
-                  <span className="absolute right-6 top-7 rounded-full bg-accent/15 px-3 py-1 text-xs font-semibold text-accent">
-                    {t.popular}
-                  </span>
-                ) : null}
-                <h3 className="text-lg font-semibold text-text">{copy.name}</h3>
-                <p className="mt-1 text-sm text-muted">{copy.blurb}</p>
-                <Price amount={String(pack.price)} suffix={t.perMonth} />
-                <p className="mt-2 text-sm text-muted">
-                  ${pack.perHour}
-                  {t.perHourShort}
-                  {saved > 0 ? ` · ${t.save} $${saved}` : ""}
-                </p>
-                <Features items={copy.features} />
-                <a
-                  href="#book"
-                  className={`mt-7 block rounded-card px-5 py-3 text-center font-semibold ${
-                    pack.featured
-                      ? "bg-accent text-on-accent hover:bg-accent-strong"
-                      : "border border-line font-medium text-text hover:border-muted"
-                  }`}
-                >
-                  {t.cta}
-                </a>
-              </article>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const LOGISTICS_ICONS = [CalendarDots, MapPin, GraduationCap, ChatCircleDots];
-
-export function Logistics({ t }: { t: Content["logistics"] }) {
-  return (
-    <section className="border-y border-line bg-surface-2 py-20">
-      <div className={SHELL}>
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t.heading}
-        </h2>
-        <dl className="mt-10 divide-y divide-line border-t border-line">
-          {t.cards.map((card, i) => {
-            const Icon = LOGISTICS_ICONS[i] ?? CalendarDots;
-            return (
-              <div
-                key={card.title}
-                className="settle grid gap-2 py-5 sm:grid-cols-[auto_10rem_1fr] sm:items-baseline sm:gap-6"
-              >
-                <Icon
-                  size={20}
-                  weight="duotone"
-                  className="hidden text-accent sm:block"
-                />
-                <dt className="font-medium text-text">{card.title}</dt>
-                <dd className="leading-relaxed text-muted">{card.body}</dd>
-              </div>
-            );
-          })}
-        </dl>
       </div>
     </section>
   );

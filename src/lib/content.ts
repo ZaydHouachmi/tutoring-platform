@@ -96,9 +96,13 @@ export type Content = {
       plusExtra: string;
     };
   };
-  logistics: {
+  availability: {
     heading: string;
-    cards: { title: string; body: string }[];
+    sub: string;
+    showAll: string;
+    note: string;
+    chosen: string;
+    clear: string;
   };
   faq: { heading: string; items: { q: string; a: string }[] };
   booking: {
@@ -309,26 +313,13 @@ export const content: Record<Lang, Content> = {
         plusExtra: "plus extra hours at the single rate",
       },
     },
-    logistics: {
-      heading: "How it works in practice",
-      cards: [
-        {
-          title: "When",
-          body: "Friday evenings, Saturdays and Sundays. Pick the slot that suits your week.",
-        },
-        {
-          title: "Where",
-          body: "Online over video, or in person in Ottawa. Many families mix both.",
-        },
-        {
-          title: "Which grades",
-          body: "Any grade. Most students are in Grade 7 through Grade 12.",
-        },
-        {
-          title: "Which language",
-          body: "English, French or Arabic. Pick whichever your child thinks in.",
-        },
-      ],
+    availability: {
+      heading: "Pick a time",
+      sub: "Sessions run Friday evenings, Saturdays and Sundays.",
+      showAll: "Show the next two weeks",
+      note: "Times shown are the slots I run. I confirm by message before the session, and we can move it with 24 hours notice.",
+      chosen: "Chosen time",
+      clear: "Clear",
     },
     faq: {
       heading: "Questions parents ask",
@@ -567,26 +558,13 @@ export const content: Record<Lang, Content> = {
         plusExtra: "plus des heures supplémentaires au tarif unitaire",
       },
     },
-    logistics: {
-      heading: "Comment ça se passe",
-      cards: [
-        {
-          title: "Quand",
-          body: "Vendredis en soirée, samedis et dimanches. Choisissez le créneau qui convient.",
-        },
-        {
-          title: "Où",
-          body: "En ligne par vidéo, ou en personne à Ottawa. Plusieurs familles alternent.",
-        },
-        {
-          title: "Quels niveaux",
-          body: "Tous les niveaux. La plupart des élèves sont de la 7e à la 12e année.",
-        },
-        {
-          title: "Quelle langue",
-          body: "Anglais, français ou arabe. Celle dans laquelle votre enfant pense.",
-        },
-      ],
+    availability: {
+      heading: "Choisissez un horaire",
+      sub: "Les séances ont lieu le vendredi soir, le samedi et le dimanche.",
+      showAll: "Voir les deux prochaines semaines",
+      note: "Les horaires affichés sont mes créneaux. Je confirme par message avant la séance, et on peut la déplacer avec 24 heures d'avis.",
+      chosen: "Horaire choisi",
+      clear: "Effacer",
     },
     faq: {
       heading: "Questions fréquentes des parents",

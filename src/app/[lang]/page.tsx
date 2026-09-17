@@ -9,7 +9,6 @@ import {
   Credentials,
   Faq,
   Hero,
-  Logistics,
   Pricing,
   Services,
 } from "@/components/sections";
@@ -63,9 +62,12 @@ export default async function LandingPage({
         <About t={t.about} />
         <Approach t={t.approach} demo={t.demo} />
         <Pricing t={t.pricing} />
-        <Logistics t={t.logistics} />
         <Faq t={t.faq} />
-        <BookingSection t={t.booking} lang={lang} />
+        <BookingSection
+          t={t.booking}
+          availability={t.availability}
+          lang={lang}
+        />
       </main>
       <SiteFooter t={t.footer} nav={t.nav} lang={lang} />
     </>
