@@ -37,7 +37,16 @@ export async function notifyNewBooking(inquiry: Inquiry): Promise<void> {
   const to = process.env.NOTIFY_EMAIL;
   const from = process.env.NOTIFY_FROM ?? "Tutoring Ottawa <onboarding@resend.dev>";
 
-  if (!apiKey || !to) return;
+  if (!apiKey || !to) {
+    // Say so in the logs. A silent skip here is indistinguishable from a
+    // delivery failure, which makes it painful to diagnose in production.
+    console.warn(
+      "[notify] skipped: not configured",
+      `RESEND_API_KEY ${apiKey ? "set" : "MISSING"}`,
+      `NOTIFY_EMAIL ${to ? "set" : "MISSING"}`,
+    );
+    return;
+  }
 
   const rows: [string, string][] = [
     ["Name", inquiry.name],
