@@ -12,6 +12,8 @@
   --color-line: #e3e5e0;
   --color-text: #14181a;
   --color-muted: #5a6560;
+  /* 4.6:1 on white: placeholder text is not exempt from WCAG AA. */
+  --color-placeholder: #6e7a74;
   --color-accent: #0e7a4a;
   --color-accent-strong: #0a6340;
   --color-on-accent: #ffffff;

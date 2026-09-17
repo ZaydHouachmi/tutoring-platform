@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { CheckCircle, WarningCircle } from "@phosphor-icons/react";
 import type { Slot } from "@/lib/availability";
 import {
@@ -14,7 +15,7 @@ import {
 type Status = "idle" | "sending" | "sent" | "error";
 
 const fieldStyles =
-  "w-full rounded-card border border-line bg-surface px-4 py-3 text-text placeholder:text-muted/70 focus:border-accent focus:outline-none";
+  "w-full rounded-card border border-line bg-surface px-4 py-3 text-text placeholder:text-placeholder focus:border-accent focus:outline-none";
 
 function Field({
   label,
@@ -44,6 +45,13 @@ export function BookingForm({
   slot?: Slot | null;
 }) {
   const [status, setStatus] = useState<Status>("idle");
+  const confirmation = useRef<HTMLDivElement>(null);
+
+  // The form is replaced by the confirmation, so focus would otherwise land on
+  // the document body and a screen reader would hear nothing at all.
+  useEffect(() => {
+    if (status === "sent") confirmation.current?.focus();
+  }, [status]);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,7 +62,12 @@ export function BookingForm({
       const res = await fetch("/api/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, lang, slot: slot?.id ?? "" }),
+        body: JSON.stringify({
+          ...data,
+          consent: data.consent === "on",
+          lang,
+          slot: slot?.id ?? "",
+        }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus("sent");
@@ -65,7 +78,12 @@ export function BookingForm({
 
   if (status === "sent") {
     return (
-      <div className="confirm rounded-card border border-accent/50 bg-surface p-8 text-center">
+      <div
+        ref={confirmation}
+        tabIndex={-1}
+        role="status"
+        className="confirm rounded-card border border-accent/50 bg-surface p-8 text-center focus:outline-none"
+      >
         <CheckCircle size={40} weight="duotone" className="mx-auto text-accent" />
         <p className="mt-4 text-lg font-medium text-text">{t.success}</p>
       </div>
@@ -148,10 +166,41 @@ export function BookingForm({
         </Field>
       </div>
 
+      {/* Consent is explicit because the request concerns a child. */}
+      <div className="sm:col-span-2">
+        <label className="flex gap-3 text-sm leading-relaxed text-muted">
+          <input
+            type="checkbox"
+            name="consent"
+            required
+            className="mt-1 h-4 w-4 shrink-0 accent-accent"
+          />
+          <span>
+            {t.consent}{" "}
+            <Link
+              href={`/${lang}/legal/privacy`}
+              className="text-accent underline underline-offset-2 hover:text-accent-strong"
+            >
+              {t.consentLink}
+            </Link>
+            .
+          </span>
+        </label>
+      </div>
+
       {status === "error" ? (
-        <p className="flex items-center gap-2 text-sm text-red-700 sm:col-span-2">
+        <p
+          role="alert"
+          className="flex items-center gap-2 text-sm text-red-700 sm:col-span-2"
+        >
           <WarningCircle size={18} weight="duotone" />
-          {t.error} {CONTACT.email}
+          {t.error}{" "}
+          <a
+            href={`https://instagram.com/${CONTACT.instagram}`}
+            className="underline underline-offset-2"
+          >
+            @{CONTACT.instagram}
+          </a>
         </p>
       ) : null}
 

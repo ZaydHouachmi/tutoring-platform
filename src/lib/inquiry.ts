@@ -16,6 +16,7 @@ export type Inquiry = {
   message: string;
   lang: string;
   slot: string;
+  consent: boolean;
 };
 
 /** Caps exist so a single request cannot push megabytes into storage or email. */
@@ -68,6 +69,9 @@ export function parseInquiry(
     slot: SLOT.test(clean(raw.slot, LIMITS.slot))
       ? clean(raw.slot, LIMITS.slot)
       : "",
+    // Recorded as given: consent is a claim the sender makes, so it is stored
+    // rather than assumed, and the request is refused without it.
+    consent: raw.consent === true || raw.consent === "on",
   };
 
   const errors: string[] = [];
@@ -75,6 +79,7 @@ export function parseInquiry(
   if (!EMAIL.test(value.email)) errors.push("email");
   if (value.grade === "") errors.push("grade");
   if (value.message.length < 5) errors.push("message");
+  if (!value.consent) errors.push("consent");
 
   return errors.length > 0 ? { ok: false, errors } : { ok: true, value };
 }

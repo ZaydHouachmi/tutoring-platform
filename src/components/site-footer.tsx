@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CONTACT, type Content, type Lang } from "@/lib/content";
+import { LEGAL_DOCS, legalLabels } from "@/lib/legal";
 
 export function SiteFooter({
   t,
@@ -70,9 +71,20 @@ export function SiteFooter({
         </div>
       </div>
 
-      <p className="mx-auto mt-12 w-full max-w-6xl px-5 text-xs text-muted sm:px-8">
-        {year} Mozayd Houachmi. {CONTACT.city}.
-      </p>
+      <div className="mx-auto mt-12 flex w-full max-w-6xl flex-col gap-4 px-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <p className="text-xs text-muted">
+          {year} Mozayd Houachmi. {CONTACT.city}.
+        </p>
+        <ul className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted">
+          {LEGAL_DOCS.map((doc) => (
+            <li key={doc}>
+              <Link href={`/${lang}/legal/${doc}`} className="hover:text-text">
+                {legalLabels[lang][doc]}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </footer>
   );
 }

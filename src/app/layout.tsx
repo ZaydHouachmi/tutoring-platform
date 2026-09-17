@@ -19,6 +19,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  /*
+   * A root layout wraps every locale, so this attribute can only carry a
+   * default. The real per-locale language is set on the wrapper in
+   * app/[lang]/layout.tsx, which assistive tech honours for everything inside
+   * it. Reading the path here instead would opt the whole site out of static
+   * rendering for the sake of one attribute.
+   */
   return (
     <html
       lang="en"

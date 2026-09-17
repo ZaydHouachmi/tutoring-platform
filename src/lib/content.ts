@@ -125,6 +125,9 @@ export type Content = {
     sending: string;
     success: string;
     error: string;
+    consent: string;
+    consentLink: string;
+    consentError: string;
   };
   footer: { tagline: string; nav: string; contact: string };
 };
@@ -318,7 +321,7 @@ export const content: Record<Lang, Content> = {
       heading: "Pick a time",
       sub: "Sessions run Friday evenings, Saturdays and Sundays.",
       showAll: "Show the next two weeks",
-      note: "Times shown are the slots I run. I confirm by message before the session, and we can move it with 24 hours notice.",
+      note: "All times are Eastern (Ottawa). These are the slots I run: I confirm by message before the session, and we can move it with 24 hours notice.",
       chosen: "Chosen time",
       clear: "Clear",
       taken: "already booked",
@@ -366,7 +369,11 @@ export const content: Record<Lang, Content> = {
       submit: "Send request",
       sending: "Sending",
       success: "Thanks. I will get back to you shortly with a few times.",
-      error: "That did not send. Please email me instead.",
+      error: "That did not send. Please message me on Instagram instead:",
+      consent:
+        "I am the parent or guardian of this student, and I agree to my details being used to arrange tutoring, as described in the",
+      consentLink: "privacy policy",
+      consentError: "Please confirm this to send your request.",
     },
     footer: {
       tagline:
@@ -564,7 +571,7 @@ export const content: Record<Lang, Content> = {
       heading: "Choisissez un horaire",
       sub: "Les séances ont lieu le vendredi soir, le samedi et le dimanche.",
       showAll: "Voir les deux prochaines semaines",
-      note: "Les horaires affichés sont mes créneaux. Je confirme par message avant la séance, et on peut la déplacer avec 24 heures d'avis.",
+      note: "Tous les horaires sont à l'heure de l'Est (Ottawa). Ce sont mes créneaux : je confirme par message avant la séance, et on peut la déplacer avec 24 heures d'avis.",
       chosen: "Horaire choisi",
       clear: "Effacer",
       taken: "déjà réservé",
@@ -616,7 +623,11 @@ export const content: Record<Lang, Content> = {
       submit: "Envoyer la demande",
       sending: "Envoi",
       success: "Merci. Je reviens vers vous rapidement avec des horaires.",
-      error: "L'envoi a échoué. Écrivez-moi par courriel.",
+      error: "L'envoi a échoué. Écrivez-moi sur Instagram :",
+      consent:
+        "Je suis le parent ou tuteur de l'élève et j'accepte que mes coordonnées servent à organiser le tutorat, comme décrit dans la",
+      consentLink: "politique de confidentialité",
+      consentError: "Veuillez confirmer pour envoyer votre demande.",
     },
     footer: {
       tagline:
