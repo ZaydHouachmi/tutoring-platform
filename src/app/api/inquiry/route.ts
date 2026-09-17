@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import { parseInquiry, pruneRateLimits, rateLimit } from "@/lib/inquiry";
+import { isConfigured, supabase } from "@/lib/supabase";
 
 /**
  * Booking requests from the landing page.
  *
- * Phase 1: validates, rate limits, and logs on the server. Nothing is stored
- * and no email is sent yet, so requests are NOT delivered anywhere.
- * Phase 2 replaces the log with a Supabase insert plus a confirmation email.
+ * Validated, rate limited, then stored in Supabase. Without Supabase
+ * configured (a fresh clone, or local work with no .env.local) it logs instead
+ * of failing, so the form still works in development.
  */
 
 /** A request body this large is never a real booking request. */
@@ -51,10 +52,35 @@ export async function POST(request: Request) {
     );
   }
 
-  console.info("[inquiry]", {
-    ...parsed.value,
-    receivedAt: new Date().toISOString(),
-  });
+  const inquiry = parsed.value;
 
-  return NextResponse.json({ ok: true });
+  if (!isConfigured) {
+    console.warn("[inquiry] Supabase not configured, logging instead", {
+      ...inquiry,
+      receivedAt: new Date().toISOString(),
+    });
+    return NextResponse.json({ ok: true, stored: false });
+  }
+
+  const { error } = await supabase()
+    .from("bookings")
+    .insert({
+      name: inquiry.name,
+      email: inquiry.email,
+      phone: inquiry.phone || null,
+      grade: inquiry.grade,
+      language: inquiry.language || null,
+      format: inquiry.format || null,
+      message: inquiry.message,
+      slot: inquiry.slot || null,
+      lang: inquiry.lang,
+    });
+
+  if (error) {
+    // Log the database's reason, tell the visitor nothing about our internals.
+    console.error("[inquiry] insert failed", error.message);
+    return NextResponse.json({ error: "Could not save" }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true, stored: true });
 }

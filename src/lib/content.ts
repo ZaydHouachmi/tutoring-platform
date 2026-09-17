@@ -103,6 +103,7 @@ export type Content = {
     note: string;
     chosen: string;
     clear: string;
+    taken: string;
   };
   faq: { heading: string; items: { q: string; a: string }[] };
   booking: {
@@ -320,6 +321,7 @@ export const content: Record<Lang, Content> = {
       note: "Times shown are the slots I run. I confirm by message before the session, and we can move it with 24 hours notice.",
       chosen: "Chosen time",
       clear: "Clear",
+      taken: "already booked",
     },
     faq: {
       heading: "Questions parents ask",
@@ -565,6 +567,7 @@ export const content: Record<Lang, Content> = {
       note: "Les horaires affichés sont mes créneaux. Je confirme par message avant la séance, et on peut la déplacer avec 24 heures d'avis.",
       chosen: "Horaire choisi",
       clear: "Effacer",
+      taken: "déjà réservé",
     },
     faq: {
       heading: "Questions fréquentes des parents",

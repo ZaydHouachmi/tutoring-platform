@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatDay, upcomingDays, type Slot } from "@/lib/availability";
 import type { Content, Lang } from "@/lib/content";
 
@@ -22,7 +22,23 @@ export function Availability({
   onSelect: (slot: Slot | null) => void;
 }) {
   const [showAll, setShowAll] = useState(false);
+  const [taken, setTaken] = useState<string[]>([]);
   const days = useMemo(() => upcomingDays(14), []);
+
+  // Which slots are gone. If this fails the grid still works: every slot shows
+  // as open and a clash gets caught when the session is confirmed.
+  useEffect(() => {
+    let active = true;
+    fetch("/api/slots")
+      .then((res) => (res.ok ? res.json() : { taken: [] }))
+      .then((data: { taken?: string[] }) => {
+        if (active) setTaken(data.taken ?? []);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
   const visible = showAll ? days : days.slice(0, 4);
 
   return (
@@ -42,16 +58,21 @@ export function Availability({
             <div className="flex flex-wrap gap-2">
               {day.slots.map((slot) => {
                 const isSelected = selected?.id === slot.id;
+                const isTaken = taken.includes(slot.id);
                 return (
                   <button
                     key={slot.id}
                     type="button"
+                    disabled={isTaken}
                     aria-pressed={isSelected}
+                    aria-label={isTaken ? `${slot.time} ${t.taken}` : undefined}
                     onClick={() => onSelect(isSelected ? null : slot)}
-                    className={`rounded-card border px-3.5 py-2 font-mono text-sm active:scale-[0.97] ${
-                      isSelected
-                        ? "border-accent bg-accent text-on-accent"
-                        : "border-line bg-surface text-text hover:border-muted"
+                    className={`rounded-card border px-3.5 py-2 font-mono text-sm ${
+                      isTaken
+                        ? "cursor-not-allowed border-line/60 bg-surface-2 text-muted/50 line-through"
+                        : isSelected
+                          ? "border-accent bg-accent text-on-accent active:scale-[0.97]"
+                          : "border-line bg-surface text-text hover:border-muted active:scale-[0.97]"
                     }`}
                   >
                     {slot.time}
