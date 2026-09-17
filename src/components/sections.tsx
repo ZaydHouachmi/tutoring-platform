@@ -7,6 +7,7 @@ import {
 import { RATES, type Content } from "@/lib/content";
 import { MethodWalkthrough } from "@/components/method-walkthrough";
 import { HeroPortrait } from "@/components/hero-portrait";
+import { PenUnderline } from "@/components/pen-underline";
 
 const SHELL = "mx-auto w-full max-w-6xl px-5 sm:px-8";
 
@@ -33,7 +34,10 @@ export function Hero({ t }: { t: Content["hero"] }) {
           <Eyebrow>{t.eyebrow}</Eyebrow>
           <h1 className="mt-6 text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.03em] sm:text-6xl lg:text-7xl">
             {t.headline}{" "}
-            <span className="text-accent">{t.headlineAccent}</span>
+            <span className="relative inline-block text-accent">
+              {t.headlineAccent}
+              <PenUnderline />
+            </span>
           </h1>
           <p className="mt-7 max-w-[46ch] text-lg leading-relaxed text-muted">
             {t.sub}
