@@ -1,15 +1,31 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { formatDay, upcomingDays, type Slot } from "@/lib/availability";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { formatDay, upcomingDays, type Day, type Slot } from "@/lib/availability";
 import type { Content, Lang } from "@/lib/content";
 
 /**
  * The next two weeks of session times, picked before the form is filled in.
  *
- * Generated on the client from the weekly rule so the dates are always current
- * without a build. Times are shown in the visitor's own locale formatting.
+ * Dates are generated AFTER mount, not during render. This component ships
+ * inside a statically prerendered page, so computing them during render would
+ * bake the build machine's date into the HTML: every visitor would see stale
+ * dates for a moment and React would report a hydration mismatch, worsening
+ * the longer it had been since the last deploy.
  */
+/** The dates never change while the page is open, so nothing to subscribe to. */
+const subscribeNever = () => () => {};
+
+const NO_DAYS: Day[] = [];
+const serverDays = () => NO_DAYS;
+
+/**
+ * Cached because getSnapshot must return a stable reference: a fresh array
+ * every call would spin React in a loop.
+ */
+let cachedDays: Day[] | null = null;
+const clientDays = () => (cachedDays ??= upcomingDays(14));
+
 export function Availability({
   lang,
   t,
@@ -23,7 +39,10 @@ export function Availability({
 }) {
   const [showAll, setShowAll] = useState(false);
   const [taken, setTaken] = useState<string[]>([]);
-  const days = useMemo(() => upcomingDays(14), []);
+  // useSyncExternalStore is the hook for a value that only exists on the
+  // client: the server snapshot is empty, the client snapshot is today's
+  // dates, and React knows not to treat the difference as a mismatch.
+  const days = useSyncExternalStore(subscribeNever, clientDays, serverDays);
 
   // Which slots are gone. If this fails the grid still works: every slot shows
   // as open and a clash gets caught when the session is confirmed.
@@ -47,6 +66,13 @@ export function Availability({
       <p className="mt-1 text-sm text-muted">{t.sub}</p>
 
       <div className="mt-5 space-y-3">
+        {days.length === 0 ? (
+          <div aria-hidden className="space-y-3">
+            {[0, 1, 2, 3].map((row) => (
+              <div key={row} className="h-11 rounded-card bg-surface-2" />
+            ))}
+          </div>
+        ) : null}
         {visible.map((day) => (
           <div
             key={day.date.toISOString()}

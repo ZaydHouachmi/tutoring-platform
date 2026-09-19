@@ -32,8 +32,28 @@ const LIMITS = {
   slot: 20,
 } as const;
 
+import { GRADES, SESSION_LANGUAGES } from "@/lib/content";
+
+const FORMATS = ["online", "in-person", "either"] as const;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const SLOT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+
+/**
+ * True only for a slot id that names a real moment. The regex alone accepts
+ * 2026-13-01T10:00, and February 30th silently rolls forward to March, so the
+ * parsed date is formatted back and compared to what was sent.
+ */
+export function isRealSlot(value: string): boolean {
+  if (!SLOT.test(value)) return false;
+  const date = new Date(`${value}:00`);
+  if (Number.isNaN(date.getTime())) return false;
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const rebuilt =
+    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}` +
+    `T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  return rebuilt === value;
+}
 
 function clean(value: unknown, max: number): string {
   if (typeof value !== "string") return "";
@@ -66,7 +86,7 @@ export function parseInquiry(
     message: clean(raw.message, LIMITS.message),
     lang: clean(raw.lang, LIMITS.lang) === "fr" ? "fr" : "en",
     // Shape-checked rather than trusted: it lands in a confirmation message.
-    slot: SLOT.test(clean(raw.slot, LIMITS.slot))
+    slot: isRealSlot(clean(raw.slot, LIMITS.slot))
       ? clean(raw.slot, LIMITS.slot)
       : "",
     // Recorded as given: consent is a claim the sender makes, so it is stored
@@ -77,7 +97,16 @@ export function parseInquiry(
   const errors: string[] = [];
   if (value.name.length < 2) errors.push("name");
   if (!EMAIL.test(value.email)) errors.push("email");
-  if (value.grade === "") errors.push("grade");
+  if (!(GRADES as readonly string[]).includes(value.grade)) errors.push("grade");
+  if (
+    value.language !== "" &&
+    !(SESSION_LANGUAGES as readonly string[]).includes(value.language)
+  ) {
+    errors.push("language");
+  }
+  if (value.format !== "" && !(FORMATS as readonly string[]).includes(value.format)) {
+    errors.push("format");
+  }
   if (value.message.length < 5) errors.push("message");
   if (!value.consent) errors.push("consent");
 

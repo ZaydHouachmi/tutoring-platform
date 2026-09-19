@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { parseInquiry, pruneRateLimits, rateLimit } from "@/lib/inquiry";
 import { isConfigured, supabase } from "@/lib/supabase";
 import { notifyNewBooking } from "@/lib/notify";
@@ -22,8 +22,10 @@ function clientKey(request: Request): string {
 }
 
 export async function POST(request: Request) {
-  const length = Number(request.headers.get("content-length") ?? 0);
-  if (length > MAX_BODY_BYTES) {
+  // content-length is client-controlled and omitting it made the cap pass with
+  // 0. Measure the bytes actually received instead.
+  const raw = await request.text();
+  if (new TextEncoder().encode(raw).length > MAX_BODY_BYTES) {
     return NextResponse.json({ error: "Body too large" }, { status: 413 });
   }
 
@@ -38,12 +40,19 @@ export async function POST(request: Request) {
 
   let body: unknown;
   try {
-    body = await request.json();
+    body = JSON.parse(raw);
   } catch {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
   const parsed = parseInquiry(body);
+
+  // A honeypot only works while the bot cannot tell it tripped one, so a
+  // caught submission gets the same answer a real one would.
+  if (!parsed.ok && parsed.errors[0] === "rejected") {
+    return NextResponse.json({ ok: true, stored: false });
+  }
+
   if (!parsed.ok) {
     // The response never echoes back what was submitted: that is how reflected
     // input turns into someone else's problem.
@@ -83,9 +92,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Could not save" }, { status: 500 });
   }
 
-  // Saved first, told second. notifyNewBooking never throws, so a mail outage
-  // cannot turn a stored booking into an error for the family.
-  await notifyNewBooking(inquiry);
+  // Saved first, told second, and told after the response has gone out: the
+  // family should not wait on an email provider to learn their request landed.
+  after(() => notifyNewBooking(inquiry));
 
   return NextResponse.json({ ok: true, stored: true });
 }

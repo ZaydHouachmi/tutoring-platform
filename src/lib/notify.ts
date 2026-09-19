@@ -25,6 +25,7 @@ function formatSlot(slot: string): string {
   if (!slot) return "No time chosen";
   const [date, time] = slot.split("T");
   const when = new Date(`${date}T${time}:00`);
+  if (Number.isNaN(when.getTime())) return slot;
   return `${new Intl.DateTimeFormat("en-CA", {
     weekday: "long",
     day: "numeric",
@@ -33,6 +34,17 @@ function formatSlot(slot: string): string {
 }
 
 export async function notifyNewBooking(inquiry: Inquiry): Promise<void> {
+  try {
+    await send(inquiry);
+  } catch (error) {
+    // The booking is already stored by the time this runs. Nothing here is
+    // allowed to turn a saved booking into an error for the family, including
+    // a date that fails to format.
+    console.error("[notify] could not send", error);
+  }
+}
+
+async function send(inquiry: Inquiry): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.NOTIFY_EMAIL;
   const from = process.env.NOTIFY_FROM ?? "Tutoring Ottawa <onboarding@resend.dev>";
@@ -85,9 +97,12 @@ export async function notifyNewBooking(inquiry: Inquiry): Promise<void> {
       </p>
     </div>`;
 
-  try {
+  {
     const res = await fetch(API, {
       method: "POST",
+      // Without a deadline a hung provider holds the HTTP response open until
+      // the platform kills the function.
+      signal: AbortSignal.timeout(8000),
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
@@ -110,7 +125,5 @@ export async function notifyNewBooking(inquiry: Inquiry): Promise<void> {
     // The id makes a delivery traceable in Resend's dashboard later.
     const { id } = (await res.json()) as { id?: string };
     console.info("[notify] sent", id);
-  } catch (error) {
-    console.error("[notify] could not send", error);
   }
 }
