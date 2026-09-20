@@ -18,7 +18,11 @@ export const metadata: Metadata = {
     "One on one math tutoring in Ottawa, online or in person, in English, French or Arabic.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   /*
    * A root layout wraps every locale, so this attribute can only carry a
    * default. The real per-locale language is set on the wrapper in
